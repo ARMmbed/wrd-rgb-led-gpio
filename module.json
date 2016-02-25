@@ -1,0 +1,16 @@
+{
+  "name": "wrd-rgb-led-gpio",
+  "version": "0.0.0",
+  "description": "RGB LED driver using built-in GPIO and software PWM.",
+  "keywords": [],
+  "author": "Marcus Chang <marcus.chang@arm.com>",
+  "repository": {
+    "url": "git@github.com:ARMmbed/wrd-rgb-led-gpio.git",
+    "type": "git"
+  },
+  "homepage": "https://github.com/ARMmbed/wrd-rgb-led-gpio",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "mbed-drivers": "~0.12.0"
+  }
+}
