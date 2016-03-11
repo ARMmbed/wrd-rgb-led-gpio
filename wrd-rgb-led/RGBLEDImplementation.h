@@ -34,13 +34,13 @@ public:
      * @details Pin configurations are pulled from Yotta config.
      */
     RGBLEDImplementation()
-        :   code(0x01),
-            gpioRed(YOTTA_CFG_HARDWARE_WEARABLE_REFERENCE_DESIGN_RGB_LED_RED_GPIO_PIN,
-                    YOTTA_CFG_HARDWARE_WEARABLE_REFERENCE_DESIGN_RGB_LED_RED_GPIO_INVERSE),
-            gpioGreen(YOTTA_CFG_HARDWARE_WEARABLE_REFERENCE_DESIGN_RGB_LED_GREEN_GPIO_PIN,
-                      YOTTA_CFG_HARDWARE_WEARABLE_REFERENCE_DESIGN_RGB_LED_GREEN_GPIO_INVERSE),
-            gpioBlue(YOTTA_CFG_HARDWARE_WEARABLE_REFERENCE_DESIGN_RGB_LED_BLUE_GPIO_PIN,
-                     YOTTA_CFG_HARDWARE_WEARABLE_REFERENCE_DESIGN_RGB_LED_BLUE_GPIO_INVERSE)
+        :   code(0x00),
+            gpioRed(YOTTA_CFG_HARDWARE_WRD_RGB_LED_RED_GPIO_PIN,
+                    YOTTA_CFG_HARDWARE_WRD_RGB_LED_RED_GPIO_INVERSE),
+            gpioGreen(YOTTA_CFG_HARDWARE_WRD_RGB_LED_GREEN_GPIO_PIN,
+                      YOTTA_CFG_HARDWARE_WRD_RGB_LED_GREEN_GPIO_INVERSE),
+            gpioBlue(YOTTA_CFG_HARDWARE_WRD_RGB_LED_BLUE_GPIO_PIN,
+                     YOTTA_CFG_HARDWARE_WRD_RGB_LED_BLUE_GPIO_INVERSE)
     { }
 
     /**
@@ -71,9 +71,9 @@ public:
             valueBlue  = newBlue;
 
             // set pin according to code and bitmap
-            gpioRed   = (!!(valueRed   & code)) ^ YOTTA_CFG_HARDWARE_WEARABLE_REFERENCE_DESIGN_RGB_LED_RED_GPIO_INVERSE;
-            gpioGreen = (!!(valueGreen & code)) ^ YOTTA_CFG_HARDWARE_WEARABLE_REFERENCE_DESIGN_RGB_LED_GREEN_GPIO_INVERSE;
-            gpioBlue  = (!!(valueBlue  & code)) ^ YOTTA_CFG_HARDWARE_WEARABLE_REFERENCE_DESIGN_RGB_LED_BLUE_GPIO_INVERSE;
+            gpioRed   = (!!(valueRed   & code)) ^ YOTTA_CFG_HARDWARE_WRD_RGB_LED_RED_GPIO_INVERSE;
+            gpioGreen = (!!(valueGreen & code)) ^ YOTTA_CFG_HARDWARE_WRD_RGB_LED_GREEN_GPIO_INVERSE;
+            gpioBlue  = (!!(valueBlue  & code)) ^ YOTTA_CFG_HARDWARE_WRD_RGB_LED_BLUE_GPIO_INVERSE;
 
             if ((valueRed > 0) || (valueGreen > 0) || (valueBlue > 0))
             {
@@ -90,13 +90,13 @@ public:
 private:
     void timeoutHandler(void)
     {
-        code++;
+        // skip the lowest 2 bits for better performance
+        code += 4;
 
         switch (code)
         {
-            case 0:
-            case (1 << 0):
-            case (1 << 1):
+//            case (1 << 0):
+//            case (1 << 1):
             case (1 << 2):
             case (1 << 3):
             case (1 << 4):
@@ -104,9 +104,9 @@ private:
             case (1 << 6):
             case (1 << 7):
                         // set pin according to code and bitmap
-                        gpioRed   = (!!(valueRed   & code)) ^ YOTTA_CFG_HARDWARE_WEARABLE_REFERENCE_DESIGN_RGB_LED_RED_GPIO_INVERSE;
-                        gpioGreen = (!!(valueGreen & code)) ^ YOTTA_CFG_HARDWARE_WEARABLE_REFERENCE_DESIGN_RGB_LED_GREEN_GPIO_INVERSE;
-                        gpioBlue  = (!!(valueBlue  & code)) ^ YOTTA_CFG_HARDWARE_WEARABLE_REFERENCE_DESIGN_RGB_LED_BLUE_GPIO_INVERSE;
+                        gpioRed   = (!!(valueRed   & code)) ^ YOTTA_CFG_HARDWARE_WRD_RGB_LED_RED_GPIO_INVERSE;
+                        gpioGreen = (!!(valueGreen & code)) ^ YOTTA_CFG_HARDWARE_WRD_RGB_LED_GREEN_GPIO_INVERSE;
+                        gpioBlue  = (!!(valueBlue  & code)) ^ YOTTA_CFG_HARDWARE_WRD_RGB_LED_BLUE_GPIO_INVERSE;
                         break;
             default:
                         break;
