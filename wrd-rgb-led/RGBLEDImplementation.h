@@ -66,9 +66,10 @@ public:
         {
             CriticalSectionLock lock;
 
-            valueRed   = newRed;
-            valueGreen = newGreen;
-            valueBlue  = newBlue;
+            // round up vaues 1-3 up to 4
+            valueRed   = ((newRed   < 0x04) && (newRed   != 0)) ? 0x04 : newRed;
+            valueGreen = ((newGreen < 0x04) && (newGreen != 0)) ? 0x04 : newGreen;
+            valueBlue  = ((newBlue  < 0x04) && (newBlue  != 0)) ? 0x04 : newBlue;
 
             // set pin according to code and bitmap
             gpioRed   = (!!(valueRed   & code)) ^ YOTTA_CFG_HARDWARE_WRD_RGB_LED_RED_GPIO_INVERSE;
